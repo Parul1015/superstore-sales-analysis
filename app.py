@@ -33,11 +33,7 @@ st.markdown(
 
 @st.cache_data
 def load_data():
-    data = pd.read_csv("Sample - Superstore.csv",
-encoding="latin1"
-)
-
-```
+    data = pd.read_csv("Sample - Superstore.csv",encoding="latin1")
     data["Order Date"] = pd.to_datetime(data["Order Date"])
     data["Ship Date"] = pd.to_datetime(data["Ship Date"])
 
