@@ -88,3 +88,44 @@ fig_category = px.bar(
     title="Total Sales by Product Category"
 )
 st.plotly_chart(fig_category, use_container_width=True)
+
+#Monthly Sales Trend Line Chart
+st.subheader("Sales Trend Over Time")
+
+sales_trend = filtered_df.groupby(filtered_df["Order Date"].dt.to_period("M"))["Sales"].sum().reset_index()
+sales_trend["Order Date"] = sales_trend["Order Date"].dt.to_timestamp()
+
+fig_trend = px.line(
+    sales_trend,
+    x="Order Date",
+    y="Sales",
+    title="Monthly Sales Trend",
+    markers=True
+)
+
+st.subheader("Profitability by Region")
+
+#Regional Profitability Map or Chart
+region_profit = filtered_df.groupby("Region")["Profit"].sum().reset_index()
+
+fig_region = px.bar(
+    region_profit,
+    x="Region",
+    y="Profit",
+    color="Profit",
+    color_continuous_scale="RdYlGn",
+    title="Total Profit by Region"
+)
+st.plotly_chart(fig_region, use_container_width=True)
+
+#Allow Raw Data Download
+with st.expander("View & Download Raw Filtered Data"):
+    st.dataframe(filtered_df)
+    csv_data = filtered_df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="Download Filtered Data as CSV",
+        data=csv_data,
+        file_name='filtered_superstore_data.csv',
+        mime='text/csv',
+    )
+st.plotly_chart(fig_trend, use_container_width=True)
