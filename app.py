@@ -13,9 +13,9 @@ st.write("Explore sales, profit, products, and regional performance.")
 
 @st.cache_data
 def load_data():
-df = pd.read_csv("Sample - Superstore.csv", encoding="latin1")
-df["Order Date"] = pd.to_datetime(df["Order Date"])
-df["Ship Date"] = pd.to_datetime(df["Ship Date"])
+df =    pd.read_csv("Sample - Superstore.csv", encoding="latin1")
+df["Order Date"] =    pd.to_datetime(df["Order Date"])
+df["Ship Date"] =    pd.to_datetime(df["Ship Date"])
 return df
 
 try:
