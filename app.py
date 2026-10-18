@@ -3,47 +3,32 @@ import pandas as pd
 import plotly.express as px
 
 # ----------------------------------
-
 # 1. Page Configuration
-
 # ----------------------------------
-
 st.set_page_config(
-page_title="Superstore Sales Analysis",
-page_icon="📊",
-layout="wide"
+    page_title="Superstore Sales Analysis",
+    page_icon="📊",
+    layout="wide"
 )
 
 # ----------------------------------
-
 # 2. Dashboard Title
-
 # ----------------------------------
-
 st.title("📊 Superstore Sales Analysis")
-st.markdown(
-"Explore sales, profit, product categories, and regional performance."
-)
+st.markdown("Explore sales, profit, product categories, and regional performance.")
 
 # ----------------------------------
-
 # 3. Load Dataset
-
 # ----------------------------------
-
 @st.cache_data
 def load_data():
-    data = pd.read_csv("Sample - Superstore.csv",encoding="latin1")
+    data = pd.read_csv("Sample - Superstore.csv", encoding="latin1")
     data["Order Date"] = pd.to_datetime(data["Order Date"])
     data["Ship Date"] = pd.to_datetime(data["Ship Date"])
+    return data  # Fixed indentation here
 
-return data
-```
-
-try:
 df = load_data()
 
-```
 # ----------------------------------
 # 4. Sidebar Filters
 # ----------------------------------
@@ -93,5 +78,13 @@ st.divider()
 # ----------------------------------
 st.subheader("Sales by Product Category")
 
-category_sa_
-```
+category_sales = filtered_df.groupby("Category")["Sales"].sum().reset_index()
+fig_category = px.bar(
+    category_sales,
+    x="Category",
+    y="Sales",
+    color="Category",
+    text_auto=".2s",
+    title="Total Sales by Product Category"
+)
+st.plotly_chart(fig_category, use_container_width=True)
